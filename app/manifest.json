@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_appName__",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"manifest_version": 2,
 	"description": "__MSG_appDescription__",
 	"homepage_url": "https://github.com/andrewbrey/netflix-tweaked",
@@ -21,8 +21,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"*://*.netflix.com/",
-				"*://*.netflix.com/browse/"
+				"*://*.netflix.com/*"
 			],
 			"js": [
 				"scripts/netflix-tweak.js"

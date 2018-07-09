@@ -2,10 +2,8 @@
 
 [![GitHub release](https://img.shields.io/github/package-json/v/andrewbrey/netflix-tweaked.svg)](https://github.com/andrewbrey/netflix-tweaked/releases)
 [![License: MIT](https://img.shields.io/github/license/andrewbrey/netflix-tweaked.svg)](https://github.com/andrewbrey/netflix-tweaked/blob/master/LICENSE)
-<!--- 
-[![Web store version](https://img.shields.io/chrome-web-store/v/TBD.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/TBD)
-[![User count](https://img.shields.io/chrome-web-store/users/TBD.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/TBD)
---->
+[![Web store version](https://img.shields.io/chrome-web-store/v/piocfidbkeehbojkamgamfhflpkoaifh.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
+[![User count](https://img.shields.io/chrome-web-store/users/piocfidbkeehbojkamgamfhflpkoaifh.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
 
 ---
 
@@ -13,7 +11,7 @@ With the Netflix Tweaked extension, you never have to see or hear the hero trail
 
 This extension is open source and licensed under the MIT license, so you can feel free to check out the source code at the extension home page or even contribute to make it better!
 
-<a href="https://chrome.google.com/webstore/detail/netflix-tweaked/TBD" target="_blank">
+<a href="https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh" target="_blank">
 <img src="https://github.com/andrewbrey/netflix-tweaked/blob/master/app/images/web-store-pill.png" width="200" />
 </a>
 

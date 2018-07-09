@@ -1,56 +1,71 @@
-(function () {
+(function (chrome) {
   'use strict';
+
+  chrome.runtime.onMessage.addListener(message => {
+    if(message === 'NT_RUN_TWEAKS') {
+      preventTrailerAutoPlay();
+      moveMyListsToTop();
+    }
+    return true;
+  });
 
   preventTrailerAutoPlay();
   moveMyListsToTop();
 
   function preventTrailerAutoPlay() {
-    let counter = 0;
-    let interval = setInterval(function () {
-      counter++;
+    if(location.pathname === '/browse') {
+      let counter = 0;
+      let interval = setInterval(function () {
+        counter++;
 
-      let video = document.querySelector('video');
-      if (video) {
-        clearInterval(interval);
+        let video = document.querySelector('video');
+        if (video) {
+          clearInterval(interval);
 
-        // Should the video just be deleted? Not doing so allows the method calls not to fail (they just don't do anything)...
-        video.muted = true;
-        video.pause();
-        video.play = function () {
-        };
+          video.muted = true;
+          video.pause();
+          video.play = function () {
+          };
 
-        let image = document.querySelector('.hero.static-image');
-        if (image) {
-          image.style.opacity = '1';
+          let image = document.querySelector('.hero.static-image');
+          if (image) {
+            image.style.opacity = '1';
+          }
+        } else if (counter > 30) {
+          clearInterval(interval);
         }
-      } else if (counter > 30) {
-        clearInterval(interval);
-      }
-    }, 100);
+      }, 100);
+    }
   }
 
   function moveMyListsToTop(){
-    [].forEach.call(document.querySelectorAll('.lolomo > :not(.billboard-row)'), row => {row.style.opacity = 0;});
+    if(location.pathname === '/browse') {
+      [].forEach.call(document.querySelectorAll('.lolomo > :not(.billboard-row)'), row => {
+        row.style.opacity = 0;
+      });
 
-    let counter = 0;
-    let interval = setInterval(function(){
-      counter++;
+      let counter = 0;
+      let interval = setInterval(function () {
+        counter++;
 
-      let billboard = document.querySelector('.billboard-row');
-      let queue = document.querySelector('[data-list-context=queue]');
-      let continueWatching = document.querySelector('[data-list-context=continueWatching]');
+        let billboard = document.querySelector('.billboard-row');
+        let queue = document.querySelector('[data-list-context=queue]');
+        let continueWatching = document.querySelector('[data-list-context=continueWatching]');
 
-      if(billboard && queue && continueWatching) {
-        clearInterval(interval);
+        if (billboard && queue && continueWatching) {
+          clearInterval(interval);
 
-        billboard.insertAdjacentElement('afterend', queue);
-        billboard.insertAdjacentElement('afterend', continueWatching);
+          billboard.insertAdjacentElement('afterend', queue);
+          billboard.insertAdjacentElement('afterend', continueWatching);
 
-        [].forEach.call(document.querySelectorAll('.lolomo > :not(.billboard-row)'), row => {row.style.opacity = 1;});
-      } else if(counter > 20) {
-        clearInterval(interval);
-      }
-    }, 100);
+          [].forEach.call(document.querySelectorAll('.lolomo > :not(.billboard-row)'), row => {
+            row.style.opacity = 1;
+          });
+        } else if (counter > 20) {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
   }
 
-})();
+})(chrome);

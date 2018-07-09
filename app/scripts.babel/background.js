@@ -16,4 +16,10 @@
     });
   });
 
+  chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+    if (changeInfo.status === 'loading') {
+      chrome.tabs.sendMessage(tabId, 'NT_RUN_TWEAKS');
+    }
+  });
+
 })(chrome);
