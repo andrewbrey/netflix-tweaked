@@ -5,7 +5,6 @@
   moveMyListsToTop();
 
   function preventTrailerAutoPlay() {
-    console.log('called traler');
     let counter = 0;
     let interval = setInterval(function () {
       counter++;
@@ -31,7 +30,6 @@
   }
 
   function moveMyListsToTop(){
-    console.log('called lists');
     [].forEach.call(document.querySelectorAll('.lolomo > :not(.billboard-row)'), row => {row.style.opacity = 0;});
 
     let counter = 0;
