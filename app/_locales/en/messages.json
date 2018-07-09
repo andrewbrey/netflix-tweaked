@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Netflix Tweaked",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "A Chrome extension to tweak the Netflix home screen, preventing auto-play trailers and moving your lists to the top",
+    "description": "The description of the application"
+  }
+}

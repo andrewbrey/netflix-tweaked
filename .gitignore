@@ -1,0 +1,12 @@
+.idea/
+*.iml
+node_modules/
+temp/
+.tmp/
+dist/
+.sass-cache/
+package/
+app/scripts/
+app/styles/
+*.crx
+*.pem

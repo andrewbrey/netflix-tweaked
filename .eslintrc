@@ -1,0 +1,16 @@
+{
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "chrome": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-var": ["error"],
+    "semi": ["error", "always"],
+    "no-console": "off"
+  }
+}
