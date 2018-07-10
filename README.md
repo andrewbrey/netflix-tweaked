@@ -15,6 +15,10 @@ This extension is open source and licensed under the MIT license, so you can fee
 <img src="https://github.com/andrewbrey/netflix-tweaked/blob/master/app/images/web-store-pill.png" width="200" />
 </a>
 
+<a href="https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked/" target="_blank">
+<img src="https://github.com/andrewbrey/netflix-tweaked/blob/master/app/images/firefox-store.png" width="200" />
+</a>
+
 ## Release History
 See the [Release History](https://github.com/andrewbrey/netflix-tweaked/releases) for a list of all releases.
 
