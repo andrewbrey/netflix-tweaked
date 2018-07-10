@@ -1,8 +1,10 @@
 (function (chrome) {
   'use strict';
 
+  let madeOpaque = false;
+
   chrome.runtime.onMessage.addListener(message => {
-    if(message === 'NT_RUN_TWEAKS') {
+    if (message === 'NT_RUN_TWEAKS') {
       preventTrailerAutoPlay();
       moveMyListsToTop();
     }
@@ -13,7 +15,7 @@
   moveMyListsToTop();
 
   function preventTrailerAutoPlay() {
-    if(location.pathname === '/browse') {
+    if (location.pathname === '/browse') {
       let preventAutoplayCounter = 0;
       let preventAutoplayInterval = setInterval(function () {
         preventAutoplayCounter++;
@@ -25,7 +27,7 @@
           shutItUp();
 
           ['play', 'playing'].forEach(eventName => {
-            video.addEventListener(eventName, function(){
+            video.addEventListener(eventName, function () {
               shutItUp();
             });
           });
@@ -41,14 +43,15 @@
         function shutItUp() {
           video.muted = true;
           video.pause();
-          video.play = function () {};
+          video.play = function () {
+          };
         }
       }, 100);
     }
   }
 
-  function moveMyListsToTop(){
-    if(location.pathname === '/browse') {
+  function moveMyListsToTop() {
+    if (location.pathname === '/browse') {
       let moveListsCounter = 0;
       let moveListsInterval = setInterval(function () {
         moveListsCounter++;
@@ -57,7 +60,7 @@
         let queue = document.querySelector('[data-list-context=queue]');
         let continueWatching = document.querySelector('[data-list-context=continueWatching]');
 
-        if (billboard && queue && continueWatching) {
+        if (billboard && queue && continueWatching && document.querySelectorAll('.lolomoRow').length > 5) {
           clearInterval(moveListsInterval);
 
           billboard.insertAdjacentElement('afterend', queue);
@@ -75,14 +78,18 @@
     }
 
     function makeListsOpaque() {
-      let css = '.lolomo > :not(.billboard-row) { opacity: 1; }';
-      let head = document.head || document.getElementsByTagName('head')[0];
-      let style = document.createElement('style');
+      if (!madeOpaque) {
+        madeOpaque = true;
 
-      style.type = 'text/css';
-      style.appendChild(document.createTextNode(css));
+        let css = '.lolomo > :not(.billboard-row) { opacity: 1; }';
+        let head = document.head || document.getElementsByTagName('head')[0];
+        let style = document.createElement('style');
 
-      head.appendChild(style);
+        style.type = 'text/css';
+        style.appendChild(document.createTextNode(css));
+
+        head.appendChild(style);
+      }
     }
   }
 
