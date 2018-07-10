@@ -36,7 +36,7 @@
           if (image) {
             image.style.opacity = '1';
           }
-        } else if (preventAutoplayCounter > 100) {
+        } else if (preventAutoplayCounter > 200) {
           clearInterval(preventAutoplayInterval);
         }
 
@@ -46,7 +46,7 @@
           video.play = function () {
           };
         }
-      }, 100);
+      }, 50);
     }
   }
 
@@ -67,7 +67,7 @@
           billboard.insertAdjacentElement('afterend', continueWatching);
 
           makeListsOpaque();
-        } else if (moveListsCounter > 100) {
+        } else if (moveListsCounter > 200) {
           clearInterval(moveListsInterval);
 
           makeListsOpaque();

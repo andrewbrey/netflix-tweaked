@@ -10,6 +10,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.5*** - Reliability improvements for Firefox
   - ***1.0.4*** - Prevent specificity issues for Firefox
   - ***1.0.3*** - Fixing an issue observed by a user where lists do not sort correctly every time
   - ***1.0.2*** - Several more improvements to reliability, especially under variable network conditions
