@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/github/license/andrewbrey/netflix-tweaked.svg)](https://github.com/andrewbrey/netflix-tweaked/blob/master/LICENSE)
 [![Web store version](https://img.shields.io/chrome-web-store/v/piocfidbkeehbojkamgamfhflpkoaifh.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
 [![User count](https://img.shields.io/chrome-web-store/users/piocfidbkeehbojkamgamfhflpkoaifh.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
+[![Firefox store version](https://img.shields.io/amo/v/netflix-tweaked.svg)](https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked)
+[![Firefox User count](https://img.shields.io/amo/users/netflix-tweaked.svg)](https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked)
 
 ---
 
