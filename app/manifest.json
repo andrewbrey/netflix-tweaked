@@ -27,7 +27,16 @@
 				"scripts/netflix-tweak.js"
 			],
 			"run_at": "document_idle"
-		}
+		},
+    {
+      "matches": [
+        "*://*.netflix.com/*"
+      ],
+      "css": [
+        "styles/netflix-tweak.css"
+      ],
+      "run_at": "document_start"
+    }
 	],
 	"permissions": [
 		"declarativeContent"
