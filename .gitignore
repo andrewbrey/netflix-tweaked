@@ -10,3 +10,4 @@ app/scripts/
 app/styles/
 *.crx
 *.pem
+.out/
