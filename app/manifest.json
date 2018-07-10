@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_appName__",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"manifest_version": 2,
 	"description": "__MSG_appDescription__",
 	"homepage_url": "https://github.com/andrewbrey/netflix-tweaked",
@@ -28,15 +28,15 @@
 			],
 			"run_at": "document_idle"
 		},
-    {
-      "matches": [
-        "*://*.netflix.com/*"
-      ],
-      "css": [
-        "styles/netflix-tweak.css"
-      ],
-      "run_at": "document_start"
-    }
+		{
+			"matches": [
+				"*://*.netflix.com/*"
+			],
+			"css": [
+				"styles/netflix-tweak.css"
+			],
+			"run_at": "document_start"
+		}
 	],
 	"permissions": [
 		"declarativeContent"
