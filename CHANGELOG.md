@@ -10,6 +10,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.3*** - Fixing an issue observed by a user where lists do not sort correctly every time
   - ***1.0.2*** - Several more improvements to reliability, especially under variable network conditions
   - ***1.0.1*** - Major improvement to the reliability of the logic, especially during Netflix-internal navigation
   - ***1.0.0*** - An extension is born :)
