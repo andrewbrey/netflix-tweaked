@@ -81,7 +81,7 @@
       if (!madeOpaque) {
         madeOpaque = true;
 
-        let css = '.lolomo > :not(.billboard-row) { opacity: 1; }';
+        let css = '.lolomo > :not(.billboard-row) { opacity: 1 !important; }';
         let head = document.head || document.getElementsByTagName('head')[0];
         let style = document.createElement('style');
 
