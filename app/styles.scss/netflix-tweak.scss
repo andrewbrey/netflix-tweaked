@@ -1,3 +1,7 @@
-.lolomo > :not(.billboard-row) {
+.netflix-tweaked-loaded .lolomo > :not(.billboard-row):not(.netflix-tweaked) {
   opacity: 0;
+}
+
+.netflix-tweaked-loaded img.hero.static-image {
+  opacity: 1;
 }

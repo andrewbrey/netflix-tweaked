@@ -1,96 +1,92 @@
 (function (chrome) {
   'use strict';
 
-  let madeOpaque = false;
+  document.getElementsByTagName('html')[0].classList.add('netflix-tweaked-loaded');
+
+  const NT_ON_BROWSE_SCREEN = 'NT_ON_BROWSE_SCREEN';
+  const NT_OFF_BROWSE_SCREEN = 'NT_OFF_BROWSE_SCREEN';
+
+  let browseScreenVideos = null;
+  let browseScreenVideoInterval = null;
 
   chrome.runtime.onMessage.addListener(message => {
-    if (message === 'NT_RUN_TWEAKS') {
-      preventTrailerAutoPlay();
-      moveMyListsToTop();
+    switch (message) {
+      case NT_ON_BROWSE_SCREEN: {
+        onBrowseScreen();
+        break;
+      }
+      case NT_OFF_BROWSE_SCREEN: {
+        offBrowseScreen();
+        break;
+      }
+      default: {
+        ntLog(`Unknown message from Netflix Tweaked backend: ${JSON.stringify(message)}`);
+        break;
+      }
     }
     return true;
   });
 
-  preventTrailerAutoPlay();
-  moveMyListsToTop();
+  function onBrowseScreen() {
+    if(browseScreenVideos === null) {
+      browseScreenVideos = document.getElementsByTagName('video');
+    }
 
-  function preventTrailerAutoPlay() {
-    if (location.pathname === '/browse') {
-      let preventAutoplayCounter = 0;
-      let preventAutoplayInterval = setInterval(function () {
-        preventAutoplayCounter++;
+    if(browseScreenVideoInterval === null) {
 
-        let video = document.querySelector('video');
-        if (video) {
-          clearInterval(preventAutoplayInterval);
+      browseScreenVideoInterval = setInterval(function(){
+        if(browseScreenVideos.length) {
+          clearInterval(browseScreenVideoInterval);
+          browseScreenVideoInterval = null;
 
-          shutItUp();
+          [].forEach.call(browseScreenVideos, browseScreenVideo => {
+            shutItUp(browseScreenVideo);
 
-          ['play', 'playing'].forEach(eventName => {
-            video.addEventListener(eventName, function () {
-              shutItUp();
+            ['play', 'playing'].forEach(eventName => {
+              browseScreenVideo.addEventListener(eventName, function () {
+                shutItUp(browseScreenVideo);
+              });
             });
+
+            function shutItUp(video){
+              ntLog("Go away auto-play trailer! Re-making auto-play trailer inert. It's an epic battle with the Netflix code to keep it this way ¯\\_(ツ)_/¯");
+              video.muted = true;
+              video.pause();
+              video.play = function () {};
+            }
           });
-
-          let image = document.querySelector('.hero.static-image');
-          if (image) {
-            image.style.opacity = '1';
-          }
-        } else if (preventAutoplayCounter > 200) {
-          clearInterval(preventAutoplayInterval);
         }
+      }, 500);
 
-        function shutItUp() {
-          video.muted = true;
-          video.pause();
-          video.play = function () {
-          };
-        }
-      }, 50);
     }
   }
 
-  function moveMyListsToTop() {
-    if (location.pathname === '/browse') {
-      let moveListsCounter = 0;
-      let moveListsInterval = setInterval(function () {
-        moveListsCounter++;
+  function offBrowseScreen() {
+    browseScreenVideos = null;
+  }
 
-        let billboard = document.querySelector('.billboard-row');
-        let queue = document.querySelector('[data-list-context=queue]');
-        let continueWatching = document.querySelector('[data-list-context=continueWatching]');
+  function makeListsOpaque() {
+    if (!document.querySelector('style.nt-make-opaque')) {
 
-        if (billboard && queue && continueWatching && document.querySelectorAll('.lolomoRow').length > 5) {
-          clearInterval(moveListsInterval);
+      let css = '.lolomo > :not(.billboard-row) { opacity: 1 !important; }';
+      let head = document.head || document.getElementsByTagName('head')[0];
+      let style = document.createElement('style');
 
-          billboard.insertAdjacentElement('afterend', queue);
-          billboard.insertAdjacentElement('afterend', continueWatching);
+      style.type = 'text/css';
+      style.classList.add('nt-make-opaque');
+      style.appendChild(document.createTextNode(css));
 
-          makeListsOpaque();
-        } else if (moveListsCounter > 200) {
-          clearInterval(moveListsInterval);
-
-          makeListsOpaque();
-        }
-      }, 50);
-    } else {
-      makeListsOpaque();
-    }
-
-    function makeListsOpaque() {
-      if (!madeOpaque) {
-        madeOpaque = true;
-
-        let css = '.lolomo > :not(.billboard-row) { opacity: 1 !important; }';
-        let head = document.head || document.getElementsByTagName('head')[0];
-        let style = document.createElement('style');
-
-        style.type = 'text/css';
-        style.appendChild(document.createTextNode(css));
-
-        head.appendChild(style);
-      }
+      head.appendChild(style);
     }
   }
 
+  function makeListsTransparent() {
+    if(document.querySelector('style.nt-make-opaque')) {
+      document.querySelector('style.nt-make-opaque').remove();
+    }
+  }
+
+  function ntLog(what) {
+    console.log(`%c  Netflix Tweaked -> ${typeof what === 'object' ? JSON.stringify(what) : what.toString()}  `, 'font-size:14px;color:white;background-color:#2E2E2E;');
+  }
 })(chrome);
