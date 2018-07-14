@@ -1,7 +1,22 @@
 .netflix-tweaked-loaded .lolomo > :not(.billboard-row):not(.netflix-tweaked) {
   opacity: 0;
+  transition: opacity 500ms;
 }
 
 .netflix-tweaked-loaded img.hero.static-image {
   opacity: 1;
+}
+
+.netflix-tweaked-loaded .lolomo.reorder-in-progress::before {
+  position: absolute;
+  content: 'Netflix Tweaked is ensuring correct list order...';
+  z-index: 999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.75);
+  text-align: center;
+  font-size: 1.5em;
+  padding-top: 2.5em;
 }

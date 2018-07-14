@@ -4,7 +4,7 @@
 	"author": "Andrew Brey <andrew@fluencyy.com>",
 	"version": "1.0.6",
 	"manifest_version": 2,
-	"description": "A Chrome extension to tweak the Netflix home screen, preventing auto-play trailers and moving your lists to the top",
+	"description": "A web extension to tweak the Netflix home screen, preventing auto-play trailers and moving your lists to the top",
 	"homepage_url": "https://github.com/andrewbrey/netflix-tweaked",
 	"icons": {
 		"16": "images/icon-16.png",
