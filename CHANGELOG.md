@@ -10,6 +10,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.8*** - Bump the version to keep everything in sync
   - ***1.0.7*** - Quick fix to prevent a possible infinite loop - My bad ¯\\_(ツ)_/¯
   - ***1.0.6*** - Basically a rewrite to make methods location-change event based, with idempotent methods and mutation observation. TLDR, it should be more reliable now even when Netflix code changes things at runtime.
   - ***1.0.5*** - Reliability improvements for Firefox
