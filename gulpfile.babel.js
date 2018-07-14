@@ -151,7 +151,7 @@ gulp.task('package', ['build'], () => {
 gulp.task('package-firefox', ['build-firefox'], () => {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-    .pipe($.zip('Netflix-Tweaked-' + manifest.version + '.zip'))
+    .pipe($.zip('Firefox-Netflix-Tweaked-' + manifest.version + '.zip'))
     .pipe(gulp.dest('package'));
 });
 
