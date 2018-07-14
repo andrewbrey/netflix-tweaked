@@ -10,6 +10,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.6*** - Basically a rewrite to make methods location-change event based, with idempotent methods and mutation observation. TLDR, it should be more reliable now even when Netflix code changes things at runtime.
   - ***1.0.5*** - Reliability improvements for Firefox
   - ***1.0.4*** - Prevent specificity issues for Firefox
   - ***1.0.3*** - Fixing an issue observed by a user where lists do not sort correctly every time
