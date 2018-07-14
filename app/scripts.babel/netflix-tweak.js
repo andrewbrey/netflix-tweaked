@@ -11,6 +11,7 @@
 
   let listsParentElement = null;
   let listsMutationObserver = null;
+  let runawayMutationCounter = 0;
   let listMoveInterval = null;
 
   let listReorderMessageShown = false;
@@ -128,24 +129,25 @@
     function reorderFollowingMutation() {
       ntLog('Netflix code reordered the lists - Ensuring correct order is still present.');
 
+      runawayMutationCounter++;
       let allRows = document.querySelectorAll('.lolomoRow');
       let billboard = document.querySelector('.billboard-row');
       let queue = document.querySelector('[data-list-context=queue]');
       let continueWatching = document.querySelector('[data-list-context=continueWatching]');
 
-      if(allRows && allRows.length && (queue || continueWatching)) {
+      if(allRows && allRows.length && (queue || continueWatching) && runawayMutationCounter < 5000) {
         if(billboard) {
           if(queue && continueWatching) {
-            if(!(allRows[1].dataset.listContext === 'continueWatching' && allRows[2].dataset.listContext === 'queue')) {
+            if(!(allRows[0].dataset.listContext === 'continueWatching' && allRows[1].dataset.listContext === 'queue')) {
               listsParentElement.insertAdjacentElement('afterbegin', queue);
               listsParentElement.insertAdjacentElement('afterbegin', continueWatching);
             }
           } else if(queue) {
-            if(allRows[1].dataset.listContext !== 'queue') {
+            if(allRows[0].dataset.listContext !== 'queue') {
               listsParentElement.insertAdjacentElement('afterbegin', queue);
             }
           } else {
-            if(allRows[1].dataset.listContext !== 'continueWatching') {
+            if(allRows[0].dataset.listContext !== 'continueWatching') {
               listsParentElement.insertAdjacentElement('afterbegin', continueWatching);
             }
           }
@@ -190,6 +192,8 @@
     listsParentElement = null;
     listsMutationObserver = null;
     listMoveInterval = null;
+
+    runawayMutationCounter = 0;
   }
 
   function makeListsOpaque() {
