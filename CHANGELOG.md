@@ -10,10 +10,11 @@
 ### 1.x.x
 
 - ***1.0.x***
-  - ***1.0.9*** - Add gulp tasks for building Firefox which allows for adding permissions to Firefox specifically.
+  - ***1.0.10*** - Fixes issue in Firefox where extension interferes with the ability to mute a tab from the browser controls
+  - ***1.0.9*** - Add gulp tasks for building Firefox which allows for adding permissions to Firefox specifically
   - ***1.0.8*** - Bump the version to keep everything in sync
   - ***1.0.7*** - Quick fix to prevent a possible infinite loop - My bad ¯\\_(ツ)_/¯
-  - ***1.0.6*** - Basically a rewrite to make methods location-change event based, with idempotent methods and mutation observation. TLDR, it should be more reliable now even when Netflix code changes things at runtime.
+  - ***1.0.6*** - Basically a rewrite to make methods location-change event based, with idempotent methods and mutation observation. TLDR, it should be more reliable now even when Netflix code changes things at runtime
   - ***1.0.5*** - Reliability improvements for Firefox
   - ***1.0.4*** - Prevent specificity issues for Firefox
   - ***1.0.3*** - Fixing an issue observed by a user where lists do not sort correctly every time

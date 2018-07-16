@@ -65,6 +65,9 @@
             function shutItUp(video){
               ntLog("Go away auto-play trailer! Re-making auto-play trailer inert. It's an epic battle with the Netflix code to keep it this way ¯\\_(ツ)_/¯");
               video.muted = true;
+              video.src = null;
+              video.setAttribute('preload', 0);
+              video.setAttribute('autoplay', 'false');
               video.pause();
               video.play = function () {};
             }
@@ -139,16 +142,16 @@
         if(billboard) {
           if(queue && continueWatching) {
             if(!(allRows[0].dataset.listContext === 'continueWatching' && allRows[1].dataset.listContext === 'queue')) {
-              listsParentElement.insertAdjacentElement('afterbegin', queue);
-              listsParentElement.insertAdjacentElement('afterbegin', continueWatching);
+              billboard.insertAdjacentElement('afterend', queue);
+              billboard.insertAdjacentElement('afterend', continueWatching);
             }
           } else if(queue) {
             if(allRows[0].dataset.listContext !== 'queue') {
-              listsParentElement.insertAdjacentElement('afterbegin', queue);
+              billboard.insertAdjacentElement('afterend', queue);
             }
           } else {
             if(allRows[0].dataset.listContext !== 'continueWatching') {
-              listsParentElement.insertAdjacentElement('afterbegin', continueWatching);
+              billboard.insertAdjacentElement('afterend', continueWatching);
             }
           }
         } else {

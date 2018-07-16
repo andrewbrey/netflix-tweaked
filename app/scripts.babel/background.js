@@ -47,13 +47,11 @@
       chrome.pageAction.show(tabId);
       chrome.pageAction.setTitle({tabId: tabId, title: 'Netflix Tweaked is Active!'});
 
-      chrome.tabs.update(tabId, {muted: true});
       chrome.tabs.sendMessage(tabId, NT_ON_BROWSE_SCREEN);
     } else {
       chrome.pageAction.hide(tabId);
       chrome.pageAction.setTitle({tabId: tabId, title: 'Netflix Tweaked is Inactive'});
 
-      chrome.tabs.update(tabId, {muted: false});
       chrome.tabs.sendMessage(tabId, NT_OFF_BROWSE_SCREEN);
     }
   }
