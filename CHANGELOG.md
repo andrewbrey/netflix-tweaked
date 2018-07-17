@@ -1,9 +1,11 @@
 # Netflix Tweaked <img src="https://github.com/andrewbrey/netflix-tweaked/blob/master/app/images/icon-150.png" width="75" align="left" />
 
-[![GitHub release](https://img.shields.io/github/package-json/v/andrewbrey/netflix-tweaked.svg)](https://github.com/andrewbrey/netflix-tweaked/releases)
-[![License: MIT](https://img.shields.io/github/license/andrewbrey/netflix-tweaked.svg)](https://github.com/andrewbrey/netflix-tweaked/blob/master/LICENSE)
-[![Web store version](https://img.shields.io/chrome-web-store/v/piocfidbkeehbojkamgamfhflpkoaifh.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
-[![User count](https://img.shields.io/chrome-web-store/users/piocfidbkeehbojkamgamfhflpkoaifh.svg)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
+[![GitHub release](https://img.shields.io/github/package-json/v/andrewbrey/netflix-tweaked.svg?label=Package%20Version)](https://github.com/andrewbrey/netflix-tweaked/releases)
+[![License: MIT](https://img.shields.io/github/license/andrewbrey/netflix-tweaked.svg?label=License)](https://github.com/andrewbrey/netflix-tweaked/blob/master/LICENSE)
+[![Web store version](https://img.shields.io/chrome-web-store/v/piocfidbkeehbojkamgamfhflpkoaifh.svg?label=Chrome%20Store%20Version)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
+[![User count](https://img.shields.io/chrome-web-store/users/piocfidbkeehbojkamgamfhflpkoaifh.svg?label=Chrome%20Users)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
+[![Firefox store version](https://img.shields.io/amo/v/netflix-tweaked.svg?label=Firefox%20Store%20Version)](https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked)
+[![Firefox User count](https://img.shields.io/amo/users/netflix-tweaked.svg?label=Firefox%20Users)](https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked)
 
 ---
 ## Release Notes
