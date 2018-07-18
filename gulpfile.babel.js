@@ -141,10 +141,10 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('package', ['build'], () => {
+gulp.task('package-chrome', ['build-chrome'], () => {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-    .pipe($.zip('Netflix-Tweaked-' + manifest.version + '.zip'))
+    .pipe($.zip('Chrome-Netflix-Tweaked-' + manifest.version + '.zip'))
     .pipe(gulp.dest('package'));
 });
 
@@ -155,7 +155,7 @@ gulp.task('package-firefox', ['build-firefox'], () => {
     .pipe(gulp.dest('package'));
 });
 
-gulp.task('build', ['clean'], (cb) => {
+gulp.task('build-chrome', ['clean'], (cb) => {
   runSequence(
     'lint', 'babel', 'chromeManifest',
     ['html', 'images', 'extras'],
@@ -168,6 +168,10 @@ gulp.task('build-firefox', ['clean'], (cb) => {
     ['html', 'images', 'extras'],
     'firefox-extra-permissions',
     'size', cb);
+});
+
+gulp.task('package', (cb) => {
+  runSequence('package-chrome', 'package-firefox', cb);
 });
 
 gulp.task('default', ['watch']);
