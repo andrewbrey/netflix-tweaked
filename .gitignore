@@ -12,3 +12,4 @@ app/styles/
 *.pem
 .out/
 NetflixTweaked/
+notes/windows-store-manifest-keys.txt

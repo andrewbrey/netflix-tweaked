@@ -1,7 +1,7 @@
 {
   "name": "netflix-tweaked",
   "description": "A Chrome extension to tweak the Netflix home screen, preventing auto-play trailers and moving your lists to the top.",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "author": "Andrew Brey",
   "private": false,
   "repository": "https://github.com/andrewbrey/netflix-tweaked",
@@ -30,12 +30,15 @@
     "gulp-useref": "3.1.5",
     "gulp-zip": "4.1.0",
     "main-bower-files": "2.13.1",
+    "manifoldjs": "0.7.6",
     "run-sequence": "2.2.1",
     "wiredep": "4.0.0"
   },
   "scripts": {
     "serve": "gulp watch",
-    "package": "gulp package"
+    "package": "gulp package",
+    "edge:manifold-prep": "manifoldjs -l debug -p edgeextension -f edgeextension -m dist/manifest.json",
+    "edge:manifold-package": "manifoldjs -l debug -p edgeextension package NetflixTweaked/edgeextension/manifest/"
   },
   "keywords": [
     "netflix",

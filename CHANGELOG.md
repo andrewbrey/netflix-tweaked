@@ -12,6 +12,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.11*** - Add an update listener to ensure everyone stays up to date
   - ***1.0.10*** - Fixes issue in Firefox where extension interferes with the ability to mute a tab from the browser controls
   - ***1.0.9*** - Add gulp tasks for building Firefox which allows for adding permissions to Firefox specifically
   - ***1.0.8*** - Bump the version to keep everything in sync
