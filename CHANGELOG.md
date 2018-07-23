@@ -6,6 +6,7 @@
 [![User count](https://img.shields.io/chrome-web-store/users/piocfidbkeehbojkamgamfhflpkoaifh.svg?label=Chrome%20Users)](https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh)
 [![Firefox store version](https://img.shields.io/amo/v/netflix-tweaked.svg?label=Firefox%20Store%20Version)](https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked)
 [![Firefox User count](https://img.shields.io/amo/users/netflix-tweaked.svg?label=Firefox%20Users)](https://addons.mozilla.org/en-US/firefox/addon/netflix-tweaked)
+[![Edge compatibility](https://img.shields.io/badge/Microsoft%20Edge-Compatible-brightgreen.svg)](https://www.microsoft.com/store/apps/9MZ4BW66H3ZG)
 
 ---
 ## Release Notes
