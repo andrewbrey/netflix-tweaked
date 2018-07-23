@@ -34,3 +34,11 @@ This project is licensed under the MIT License - see the [license file](LICENSE)
 ## Contact
 
 If you have questions, problems or ideas, feel free to contact me at <a href="mailto:contact@fluencyy.com">contact@fluencyy.com</a>.
+
+## Building Locally
+
+To build the extension locally for development or testing:
+
+1. Install `node` (and `npm`)
+2. `cd` into the project root directory
+3. Run `gulp package` to build packaged zip files for both Chrome and Firefox (output to the `package` directory)

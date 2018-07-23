@@ -14,6 +14,11 @@
     });
   });
 
+  chrome.runtime.onUpdateAvailable.addListener(() => {
+    console.log('Update listener invoked - reloading runtime.');
+    chrome.runtime.reload();
+  });
+
   chrome.tabs.onCreated.addListener(tab => {
     if (tab && tab.url && tab.url.includes('netflix.com')) {
       NT_TABS[`_${tab.id}`] = {tabId: tab.id, url: tab.url};
