@@ -16,6 +16,7 @@
     * `Package/Identity/Version` comes from the `manifest.json` however, Edge uses a 4 point version scheme, so bump everything
       forward by 1 number, ensuring a `0` is in the final ("revision") number
     * `Package/Properties/PublisherDisplayName` comes from the `App management > App identity` page
+    * `Package/Properties/DisplayName` is `Netflix Tweaked - Aesthetic Tweaks for Desktop Netflix`
 5. Copy the following files from `app/images/` into the Edge package `Assets` directory:
     * `Square44x44Logo.png`
     * `Square54x54Logo.png`
