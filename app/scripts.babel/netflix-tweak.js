@@ -1,4 +1,4 @@
-(function (chrome) {
+(function (chrome, NetflixCadmiumPlayer) {
   'use strict';
 
   document.getElementsByTagName('html')[0].classList.add('netflix-tweaked-loaded');
@@ -35,6 +35,10 @@
   });
 
   function onBrowseScreen() {
+    if(NetflixCadmiumPlayer && NetflixCadmiumPlayer['controlProtocol'] && NetflixCadmiumPlayer['controlProtocol'].start) {
+      NetflixCadmiumPlayer['controlProtocol'].start = null;
+    }
+
     if(!listReorderMessageShown) {
       listReorderMessageShown = true;
 
@@ -66,6 +70,7 @@
               ntLog("Go away auto-play trailer! Re-making auto-play trailer inert. It's an epic battle with the Netflix code to keep it this way ¯\\_(ツ)_/¯");
               video.muted = true;
               video.src = null;
+              video.playbackRate = 0;
               video.setAttribute('preload', 0);
               video.setAttribute('autoplay', 'false');
               video.pause();
@@ -230,4 +235,4 @@
     console.log(`%c  Netflix Tweaked -> ${typeof what === 'object' ? JSON.stringify(what) : what.toString()}  `, 'font-size:14px;color:white;background-color:#2E2E2E;');
   }
 
-})(chrome);
+})(chrome, window['_cad_global']);

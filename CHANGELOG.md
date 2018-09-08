@@ -13,6 +13,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.12*** - Improve auto-playback blocking behavior to hopefully also prevent trailers seen when hovering over a list entry
   - ***1.0.11*** - Add an update listener to ensure everyone stays up to date
   - ***1.0.10*** - Fixes issue in Firefox where extension interferes with the ability to mute a tab from the browser controls
   - ***1.0.9*** - Add gulp tasks for building Firefox which allows for adding permissions to Firefox specifically
