@@ -11,6 +11,7 @@ gulp.task('extras', () => {
     'app/*.*',
     'app/_locales/**',
     'app/scripts.vendor/**',
+    'app/scripts/cadmium-player-tweak.js',
     '!app/scripts.babel',
     '!app/*.json',
     '!app/*.html',
