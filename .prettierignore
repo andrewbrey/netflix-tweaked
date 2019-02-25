@@ -1,0 +1,16 @@
+package.json
+package-lock.json
+
+.idea
+*.iml
+
+node_modules/
+dist/
+NetflixTweaked/
+design/
+.github/
+package/
+notes/
+app/scripts.vendor/
+app/scripts/
+app/styles/
