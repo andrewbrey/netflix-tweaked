@@ -13,6 +13,7 @@
 ### 1.x.x
 
 - ***1.0.x***
+  - ***1.0.14*** - Resolve issues caused by Netflix updates - trailer autoplay should again be prevented.
   - ***1.0.13*** - Further improve auto-playback of trailers seed when hovering over a list item
   - ***1.0.12*** - Improve auto-playback blocking behavior to hopefully also prevent trailers seen when hovering over a list entry
   - ***1.0.11*** - Add an update listener to ensure everyone stays up to date
