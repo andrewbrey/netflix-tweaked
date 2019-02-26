@@ -1,241 +1,233 @@
-(function(chrome) {
+(function(chrome, window) {
 	"use strict";
 
 	document.getElementsByTagName("html")[0].classList.add("netflix-tweaked-loaded");
-	waitForAndRunCadmiumTweak();
 
-	const NT_ON_BROWSE_SCREEN = "NT_ON_BROWSE_SCREEN";
-	const NT_OFF_BROWSE_SCREEN = "NT_OFF_BROWSE_SCREEN";
+	const NETFLIX_TWEAKED_DATA_NAME = "NETFLIX_TWEAKED_DATA";
 
-	let browseScreenVideos = null;
-	let browseScreenVideoInterval = null;
+	const BILLBOARD_OBSERVER_NAME = "BILLBOARD_OBSERVER";
+	const TITLE_CARDS_OBSERVER_NAME = "TITLE_CARDS_OBSERVER";
+	const JAWBONE_OBSERVER_NAME = "JAWBONE_OBSERVER";
+	const LIST_ORDER_OBSERVER_NAME = "LIST_ORDER_OBSERVER";
 
-	let listsParentElement = null;
-	let listsMutationObserver = null;
-	let runawayMutationCounter = 0;
-	let listMoveInterval = null;
+	const NETFLIX_TWEAKED_CLASS = "netflix-tweaked";
 
-	let listReorderMessageShown = false;
+	// TODO (enhancement)
+	// Make these to be user settings
+	const PREVENT_BILLBOARD_AUTOPLAY = true;
+	const PREVENT_TITLE_CARD_AUTOPLAY = true;
+	const PREVENT_JAWBONE_AUTOPLAY = false;
+
+	resetObserverCache();
 
 	chrome.runtime.onMessage.addListener(message => {
-		switch (message) {
-			case NT_ON_BROWSE_SCREEN: {
-				onBrowseScreen();
+		switch (message.message) {
+			case "RUN_TWEAKS": {
+				runTweaks();
 				break;
 			}
-			case NT_OFF_BROWSE_SCREEN: {
-				offBrowseScreen();
+			case "SHUT_OFF_TWEAKS": {
+				resetObserverCache();
 				break;
 			}
 			default: {
-				ntLog(`Unknown message from Netflix Tweaked backend: ${JSON.stringify(message)}`);
+				ntLog(`Unknown message [${message.message}]`);
 				break;
 			}
 		}
 		return true;
 	});
 
-	function onBrowseScreen() {
-		if (!listReorderMessageShown) {
-			listReorderMessageShown = true;
+	const runTweaks = throttle(_runTweaks, 500, { leading: true, trailing: false });
+	function _runTweaks() {
+		mutationsFor({
+			childSelector: ".lolomo",
+			onMutate: lolomos => {
+				const LOLOMO = lolomos[0];
 
-			showListReorderOverlay();
-			setTimeout(hideListReorderOverlay, 1500);
-		}
-
-		if (browseScreenVideos === null) {
-			browseScreenVideos = document.getElementsByTagName("video");
-		}
-
-		if (browseScreenVideoInterval === null) {
-			browseScreenVideoInterval = setInterval(function() {
-				if (browseScreenVideos && browseScreenVideos.length) {
-					clearInterval(browseScreenVideoInterval);
-					browseScreenVideoInterval = null;
-
-					[].forEach.call(browseScreenVideos, browseScreenVideo => {
-						shutItUp(browseScreenVideo);
-
-						["play", "playing"].forEach(eventName => {
-							browseScreenVideo.addEventListener(eventName, function() {
-								shutItUp(browseScreenVideo);
-							});
+				/* Billboard Trailers */
+				window[NETFLIX_TWEAKED_DATA_NAME][BILLBOARD_OBSERVER_NAME] = mutationsFor({
+					parentSelector: ".lolomo",
+					childSelector: ".billboard-row video",
+					onMutate: videos => {
+						videos.forEach(v => {
+							if (PREVENT_BILLBOARD_AUTOPLAY) {
+								v.classList.add(NETFLIX_TWEAKED_CLASS);
+								v.muted = true;
+								v.playbackRate = 0;
+								v.setAttribute("preload", 0);
+								v.setAttribute("autoplay", "false");
+								v.pause();
+								v.play = noop;
+							}
 						});
+					},
+					disconnectOnMutate: false
+				});
 
-						function shutItUp(video) {
-							ntLog(
-								"Go away auto-play trailer! Re-making auto-play trailer inert. It's an epic battle with the Netflix code to keep it this way ¯\\_(ツ)_/¯"
-							);
-							video.muted = true;
-							video.playbackRate = 0;
-							video.setAttribute("preload", 0);
-							video.setAttribute("autoplay", "false");
-							video.pause();
-							video.play = function() {};
-						}
-					});
-				}
-			}, 500);
-		}
+				/* Title Card Trailers */
+				window[NETFLIX_TWEAKED_DATA_NAME][TITLE_CARDS_OBSERVER_NAME] = mutationsFor({
+					parentSelector: ".lolomo",
+					childSelector: ".title-card video",
+					onMutate: videos => {
+						videos.forEach(v => {
+							if (PREVENT_TITLE_CARD_AUTOPLAY) {
+								v.classList.add(NETFLIX_TWEAKED_CLASS);
+								v.muted = true;
+								v.playbackRate = 0;
+								v.setAttribute("preload", 0);
+								v.setAttribute("autoplay", "false");
+								v.pause();
+								v.play = noop;
+							}
+						});
+					},
+					disconnectOnMutate: false
+				});
 
-		if (listsMutationObserver === null) {
-			if (listMoveInterval === null) {
-				listMoveInterval = setInterval(function() {
-					let billboard = document.querySelector(".billboard-row");
-					let queue = document.querySelector("[data-list-context=queue]");
-					let continueWatching = document.querySelector("[data-list-context=continueWatching]");
+				/* Jawbone Trailers */
+				window[NETFLIX_TWEAKED_DATA_NAME][JAWBONE_OBSERVER_NAME] = mutationsFor({
+					parentSelector: ".lolomo",
+					childSelector: ".jawBoneContent video",
+					onMutate: videos => {
+						videos.forEach(v => {
+							if (PREVENT_JAWBONE_AUTOPLAY) {
+								v.classList.add(NETFLIX_TWEAKED_CLASS);
+								v.muted = true;
+								v.playbackRate = 0;
+								v.setAttribute("preload", 0);
+								v.setAttribute("autoplay", "false");
+								v.pause();
+								v.play = noop;
+							}
+						});
+					},
+					disconnectOnMutate: false
+				});
 
-					if ((queue || continueWatching) && document.querySelector(".lolomo")) {
-						clearInterval(listMoveInterval);
-						listMoveInterval = null;
+				/* List Order */
+				window[NETFLIX_TWEAKED_DATA_NAME][LIST_ORDER_OBSERVER_NAME] = mutationsFor({
+					parentSelector: ".lolomo",
+					childSelector: ".lolomoRow",
+					onMutate: allRows => {
+						let billboard = document.querySelector(".billboard-row");
+						let queue = document.querySelector("[data-list-context=queue]");
+						let continueWatching = document.querySelector("[data-list-context=continueWatching]");
 
-						listsParentElement = document.querySelector(".lolomo");
-
-						setTimeout(function() {
+						if (allRows && allRows.length && (queue || continueWatching)) {
 							if (billboard) {
 								if (queue && continueWatching) {
-									billboard.insertAdjacentElement("afterend", queue);
-									billboard.insertAdjacentElement("afterend", continueWatching);
+									if (
+										!(
+											allRows[0].dataset.listContext === "continueWatching" &&
+											allRows[1].dataset.listContext === "queue"
+										)
+									) {
+										billboard.insertAdjacentElement("afterend", queue);
+										billboard.insertAdjacentElement("afterend", continueWatching);
+									}
 								} else if (queue) {
-									billboard.insertAdjacentElement("afterend", queue);
+									if (allRows[0].dataset.listContext !== "queue") {
+										billboard.insertAdjacentElement("afterend", queue);
+									}
 								} else {
-									billboard.insertAdjacentElement("afterend", continueWatching);
+									if (allRows[0].dataset.listContext !== "continueWatching") {
+										billboard.insertAdjacentElement("afterend", continueWatching);
+									}
 								}
 							} else {
 								if (queue && continueWatching) {
-									listsParentElement.insertAdjacentElement("afterbegin", queue);
-									listsParentElement.insertAdjacentElement("afterbegin", continueWatching);
+									if (
+										!(
+											allRows[0].dataset.listContext === "continueWatching" &&
+											allRows[1].dataset.listContext === "queue"
+										)
+									) {
+										LOLOMO.insertAdjacentElement("afterbegin", queue);
+										LOLOMO.insertAdjacentElement("afterbegin", continueWatching);
+									}
 								} else if (queue) {
-									listsParentElement.insertAdjacentElement("afterbegin", queue);
+									if (allRows[0].dataset.listContext !== "queue") {
+										LOLOMO.insertAdjacentElement("afterbegin", queue);
+									}
 								} else {
-									listsParentElement.insertAdjacentElement("afterbegin", continueWatching);
+									if (allRows[0].dataset.listContext !== "continueWatching") {
+										LOLOMO.insertAdjacentElement("afterbegin", continueWatching);
+									}
 								}
 							}
-
-							makeListsOpaque();
-							watchLists();
-						}, 500);
-					}
-				}, 50);
+						}
+					},
+					disconnectOnMutate: false
+				});
 			}
+		});
+	}
+
+	function mutationsFor(observationParams) {
+		observationParams.childSelector = observationParams.childSelector || "NON_EXISTENT_TAG";
+		observationParams.onMutate = observationParams.onMutate || noop;
+		observationParams.disconnectOnMutate = observationParams.disconnectOnMutate !== false;
+
+		const PARENT = observationParams.parentSelector
+			? document.querySelector(observationParams.parentSelector)
+			: document;
+
+		const MUTATION_OBSERVER = new MutationObserver(
+			throttle(
+				() => {
+					if (PARENT) {
+						const CHILDREN_TO_OBSERVE = [].slice.call(PARENT.querySelectorAll(observationParams.childSelector));
+
+						if (Array.isArray(CHILDREN_TO_OBSERVE) && CHILDREN_TO_OBSERVE.length) {
+							observationParams.onMutate(CHILDREN_TO_OBSERVE);
+
+							if (observationParams.disconnectOnMutate) {
+								MUTATION_OBSERVER.disconnect();
+							}
+						}
+					}
+				},
+				100,
+				{ leading: true, trailing: false }
+			)
+		);
+
+		if (PARENT) {
+			MUTATION_OBSERVER.observe(PARENT, {
+				subtree: true,
+				childList: true
+			});
+		} else {
+			ntLog("Bad parent selector for mutation observation!");
 		}
 
-		function watchLists() {
-			if (listsParentElement !== null) {
-				listsMutationObserver = new MutationObserver(reorderFollowingMutation);
-				listsMutationObserver.observe(listsParentElement, { childList: true });
-			}
-		}
+		return MUTATION_OBSERVER;
+	}
 
-		function reorderFollowingMutation() {
-			ntLog("Netflix code reordered the lists - Ensuring correct order is still present.");
+	function noop() {} // Does nothing, goes nowhere
 
-			runawayMutationCounter++;
-			let allRows = document.querySelectorAll(".lolomoRow");
-			let billboard = document.querySelector(".billboard-row");
-			let queue = document.querySelector("[data-list-context=queue]");
-			let continueWatching = document.querySelector("[data-list-context=continueWatching]");
+	function resetObserverCache() {
+		if (typeof window[NETFLIX_TWEAKED_DATA_NAME] === "object" && window[NETFLIX_TWEAKED_DATA_NAME] !== null) {
+			const CACHE = window[NETFLIX_TWEAKED_DATA_NAME];
 
-			if (allRows && allRows.length && (queue || continueWatching) && runawayMutationCounter < 5000) {
-				if (billboard) {
-					if (queue && continueWatching) {
-						if (
-							!(allRows[0].dataset.listContext === "continueWatching" && allRows[1].dataset.listContext === "queue")
-						) {
-							billboard.insertAdjacentElement("afterend", queue);
-							billboard.insertAdjacentElement("afterend", continueWatching);
-						}
-					} else if (queue) {
-						if (allRows[0].dataset.listContext !== "queue") {
-							billboard.insertAdjacentElement("afterend", queue);
-						}
-					} else {
-						if (allRows[0].dataset.listContext !== "continueWatching") {
-							billboard.insertAdjacentElement("afterend", continueWatching);
-						}
+			[BILLBOARD_OBSERVER_NAME, TITLE_CARDS_OBSERVER_NAME, JAWBONE_OBSERVER_NAME, LIST_ORDER_OBSERVER_NAME].forEach(
+				cacheKey => {
+					if (typeof CACHE[cacheKey] === "object" && CACHE[cacheKey] !== null) {
+						CACHE[cacheKey].disconnect();
 					}
-				} else {
-					if (queue && continueWatching) {
-						if (
-							!(allRows[0].dataset.listContext === "continueWatching" && allRows[1].dataset.listContext === "queue")
-						) {
-							listsParentElement.insertAdjacentElement("afterbegin", queue);
-							listsParentElement.insertAdjacentElement("afterbegin", continueWatching);
-						}
-					} else if (queue) {
-						if (allRows[0].dataset.listContext !== "queue") {
-							listsParentElement.insertAdjacentElement("afterbegin", queue);
-						}
-					} else {
-						if (allRows[0].dataset.listContext !== "continueWatching") {
-							listsParentElement.insertAdjacentElement("afterbegin", continueWatching);
-						}
-					}
+
+					CACHE[cacheKey] = null;
 				}
-			}
+			);
+		} else {
+			window[NETFLIX_TWEAKED_DATA_NAME] = {
+				[BILLBOARD_OBSERVER_NAME]: null,
+				[TITLE_CARDS_OBSERVER_NAME]: null,
+				[JAWBONE_OBSERVER_NAME]: null,
+				[LIST_ORDER_OBSERVER_NAME]: null
+			};
 		}
-	}
-
-	function offBrowseScreen() {
-		makeListsOpaque();
-
-		if (listsMutationObserver !== null) {
-			listsMutationObserver.disconnect();
-		}
-
-		if (browseScreenVideoInterval !== null) {
-			clearInterval(browseScreenVideoInterval);
-		}
-
-		if (listMoveInterval !== null) {
-			clearInterval(listMoveInterval);
-		}
-
-		browseScreenVideos = null;
-		browseScreenVideoInterval = null;
-
-		listsParentElement = null;
-		listsMutationObserver = null;
-		listMoveInterval = null;
-
-		runawayMutationCounter = 0;
-	}
-
-	function makeListsOpaque() {
-		if (!document.querySelector("style.nt-make-opaque")) {
-			let css = ".lolomo > :not(.billboard-row) { opacity: 1 !important; }";
-			let head = document.head || document.getElementsByTagName("head")[0];
-			let style = document.createElement("style");
-
-			style.type = "text/css";
-			style.classList.add("nt-make-opaque");
-			style.appendChild(document.createTextNode(css));
-
-			head.appendChild(style);
-		}
-	}
-
-	function hideListReorderOverlay() {
-		if (document.querySelector(".lolomo.reorder-in-progress")) {
-			document.querySelector(".lolomo.reorder-in-progress").classList.remove("reorder-in-progress");
-		}
-	}
-
-	function showListReorderOverlay() {
-		if (document.querySelector(".lolomo:not(.reorder-in-progress)")) {
-			document.querySelector(".lolomo:not(.reorder-in-progress)").classList.add("reorder-in-progress");
-		}
-	}
-
-	function waitForAndRunCadmiumTweak() {
-		ntLog("Tweaking the Netflix cadmium player to prevent trailers");
-
-		let script = document.createElement("script");
-		script.src = chrome.extension.getURL("scripts/cadmium-player-tweak.js");
-		script.onload = function() {
-			this.remove();
-		};
-		(document.head || document.documentElement).appendChild(script);
 	}
 
 	function ntLog(what) {
@@ -244,4 +236,38 @@
 			"font-size:14px;color:white;background-color:#2E2E2E;"
 		);
 	}
-})(chrome);
+
+	// Modified underscore.js throttle, borrowed from
+	// https://stackoverflow.com/a/27078401
+	function throttle(func, wait, options) {
+		let context, args, result;
+		let timeout = null;
+		let previous = 0;
+		if (!options) options = {};
+		let later = function() {
+			previous = options.leading === false ? 0 : Date.now();
+			timeout = null;
+			result = func.apply(context, args);
+			if (!timeout) context = args = null;
+		};
+		return function() {
+			let now = Date.now();
+			if (!previous && options.leading === false) previous = now;
+			let remaining = wait - (now - previous);
+			context = this;
+			args = arguments;
+			if (remaining <= 0 || remaining > wait) {
+				if (timeout) {
+					clearTimeout(timeout);
+					timeout = null;
+				}
+				previous = now;
+				result = func.apply(context, args);
+				if (!timeout) context = args = null;
+			} else if (!timeout && options.trailing !== false) {
+				timeout = setTimeout(later, remaining);
+			}
+			return result;
+		};
+	}
+})(chrome, window);

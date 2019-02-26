@@ -15,38 +15,23 @@
 	},
 	"default_locale": "en",
 	"background": {
-		"scripts": [
-			"scripts/live-reload.js",
-			"scripts/background.js"
-		]
+		"scripts": ["scripts/live-reload.js", "scripts/background.js"]
 	},
 	"content_scripts": [
 		{
-			"matches": [
-				"*://*.netflix.com/*"
-			],
-			"js": [
-				"scripts/netflix-tweak.js"
-			],
+			"matches": ["*://*.netflix.com/*"],
+			"js": ["scripts/netflix-tweak.js"],
 			"run_at": "document_start"
 		},
 		{
-			"matches": [
-				"*://*.netflix.com/*"
-			],
-			"css": [
-				"styles/netflix-tweak.css"
-			],
+			"matches": ["*://*.netflix.com/*"],
+			"css": ["styles/netflix-tweak.css"],
 			"run_at": "document_start"
 		}
 	],
-	"web_accessible_resources": [
-		"scripts/cadmium-player-tweak.js"
-	],
-	"permissions": [
-		"*://*.netflix.com/*"
-	],
-	"page_action": {
+	"web_accessible_resources": [],
+	"permissions": ["*://*.netflix.com/*", "storage"],
+	"browser_action": {
 		"default_icon": {
 			"16": "images/icon-16.png",
 			"24": "images/icon-24.png",

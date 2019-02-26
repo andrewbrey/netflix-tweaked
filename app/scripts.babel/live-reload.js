@@ -21,7 +21,6 @@ CONNECTION.onmessage = event => {
 		if (data && data.command === "reload") {
 			if (Date.now() - lastReload > RELOAD_COOLDOWN) {
 				chrome.runtime.reload();
-				chrome.developerPrivate.reload(chrome.runtime.id, { failQuietly: true });
 			}
 		}
 	}

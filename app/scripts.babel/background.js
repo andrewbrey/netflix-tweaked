@@ -1,63 +1,37 @@
 (function(chrome) {
 	"use strict";
 
-	const NT_TABS = {};
-	const NT_ON_BROWSE_SCREEN = "NT_ON_BROWSE_SCREEN";
-	const NT_OFF_BROWSE_SCREEN = "NT_OFF_BROWSE_SCREEN";
+	const NETFLIX_GENERAL_URL_MATCHER = "*://*.netflix.com/*";
+	const NETFLIX_WATCH_URL_MATCHER = /netflix\.com\/watch.+/;
 
+	chrome.runtime.onUpdateAvailable.addListener(() => chrome.runtime.reload());
 	chrome.runtime.onInstalled.addListener(() => {
-		chrome.tabs.query({ url: "*://*.netflix.com/*" }, tabs => {
-			tabs.forEach(tab => {
-				NT_TABS[`_${tab.id}`] = { tabId: tab.id, url: tab.url };
-				chrome.tabs.reload(tab.id, { bypassCache: true });
-			});
+		chrome.tabs.query({ url: NETFLIX_GENERAL_URL_MATCHER }, tabs => {
+			tabs.forEach(tab => chrome.tabs.reload(tab.id, { bypassCache: true }));
 		});
 	});
 
-	chrome.runtime.onUpdateAvailable.addListener(() => {
-		console.log("Update listener invoked - reloading runtime.");
-		chrome.runtime.reload();
-	});
+	chrome.tabs.onCreated.addListener(determineAndRunTabCommands);
+	chrome.tabs.onUpdated.addListener(determineAndRunTabCommands);
+	chrome.tabs.onActivated.addListener(determineAndRunTabCommands);
 
-	chrome.tabs.onCreated.addListener(tab => {
-		if (tab && tab.url && tab.url.includes("netflix.com")) {
-			NT_TABS[`_${tab.id}`] = { tabId: tab.id, url: tab.url };
-		}
-	});
+	function determineAndRunTabCommands() {
+		chrome.tabs.query({ url: NETFLIX_GENERAL_URL_MATCHER }, tabs => {
+			tabs
+				.filter(tab => NETFLIX_WATCH_URL_MATCHER.test(tab.url))
+				.forEach(tab => {
+					sendCommandToTab(tab.id, "SHUT_OFF_TWEAKS");
+				});
 
-	chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-		let ntTab = NT_TABS[`_${tabId}`];
+			tabs
+				.filter(tab => !NETFLIX_WATCH_URL_MATCHER.test(tab.url))
+				.forEach(tab => {
+					sendCommandToTab(tab.id, "RUN_TWEAKS");
+				});
+		});
+	}
 
-		if (ntTab) {
-			ntTab.url = tab.url;
-		} else if (tab && tab.url && tab.url.includes("netflix.com")) {
-			NT_TABS[`_${tab.id}`] = { tabId: tab.id, url: tab.url };
-		}
-
-		determineAndRunTabActions(tabId);
-	});
-
-	chrome.tabs.onActivated.addListener(activeInfo => {
-		determineAndRunTabActions(activeInfo.tabId);
-	});
-
-	chrome.tabs.onRemoved.addListener(tabId => {
-		delete NT_TABS[`_${tabId}`];
-	});
-
-	function determineAndRunTabActions(tabId) {
-		let ntTab = NT_TABS[`_${tabId}`];
-
-		if (ntTab && ntTab.url && ntTab.url.match(/netflix\.com\/browse\/?$|netflix\.com\/browse\?.*/)) {
-			chrome.pageAction.show(tabId);
-			chrome.pageAction.setTitle({ tabId: tabId, title: "Netflix Tweaked is Active!" });
-
-			chrome.tabs.sendMessage(tabId, NT_ON_BROWSE_SCREEN);
-		} else {
-			chrome.pageAction.hide(tabId);
-			chrome.pageAction.setTitle({ tabId: tabId, title: "Netflix Tweaked is Inactive" });
-
-			chrome.tabs.sendMessage(tabId, NT_OFF_BROWSE_SCREEN);
-		}
+	function sendCommandToTab(tabId, message, payload = null) {
+		chrome.tabs.sendMessage(tabId, { message, payload });
 	}
 })(chrome);
