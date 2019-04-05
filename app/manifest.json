@@ -2,7 +2,7 @@
 	"name": "Netflix Tweaked",
 	"short_name": "Netflix Tweaked",
 	"author": "Andrew Brey <andrew@fluencyy.com>",
-	"version": "1.0.14",
+	"version": "2.0.0",
 	"manifest_version": 2,
 	"description": "A web extension to tweak the Netflix home screen, preventing auto-play trailers and moving your lists to the top",
 	"homepage_url": "https://github.com/andrewbrey/netflix-tweaked",
@@ -29,8 +29,8 @@
 			"run_at": "document_start"
 		}
 	],
-	"web_accessible_resources": [],
-	"permissions": ["*://*.netflix.com/*", "storage"],
+	"web_accessible_resources": ["scripts/mutation-observers.js"],
+	"permissions": ["*://*.netflix.com/*"],
 	"browser_action": {
 		"default_icon": {
 			"16": "images/icon-16.png",

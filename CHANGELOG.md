@@ -10,6 +10,11 @@
 
 ---
 ## Release Notes
+### 2.x.x
+
+- ***2.0.x***
+  - ***2.0.0*** - More or less a complete rewrite of the extension to now rely on the Host page (the Netflix tab) to handle the logic, rather than an extension content script.
+
 ### 1.x.x
 
 - ***1.0.x***
