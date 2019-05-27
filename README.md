@@ -13,6 +13,8 @@ With the Netflix Tweaked extension, you never have to see or hear the hero trail
 
 This extension is open source and licensed under the MIT license, so you can feel free to check out the source code at the extension home page or even contribute to make it better!
 
+Enjoy the extension and feel like saying thanks? Feel free to [buy me a coffee ☕](https://www.paypal.me/fluencyy) 
+
 <a href="https://chrome.google.com/webstore/detail/netflix-tweaked/piocfidbkeehbojkamgamfhflpkoaifh" target="_blank">
 <img src="https://github.com/andrewbrey/netflix-tweaked/blob/master/app/images/web-store-pill.png" width="200" />
 </a>
