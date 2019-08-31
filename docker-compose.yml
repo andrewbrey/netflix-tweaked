@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  netflix-tweaked:
+    image: node:10.16-jessie-slim
+    container_name: netflix-tweaked-builder
+    volumes:
+      - container-node_modules:/netflix-tweaked/node_modules
+      - ./:/netflix-tweaked
+    command: bash
+    working_dir: /netflix-tweaked
+    ports:
+      - 35729:35729
+
+volumes: 
+  container-node_modules:

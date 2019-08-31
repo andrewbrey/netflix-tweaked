@@ -37,7 +37,7 @@
     "wiredep": "4.0.0"
   },
   "scripts": {
-    "serve": "gulp watch",
+    "serve": "gulp styles && gulp watch",
     "package": "gulp package",
     "edge:manifold-prep": "rimraf NetflixTweaked && manifoldjs -l debug -p edgeextension -f edgeextension -m dist/manifest.json",
     "edge:manifold-package": "manifoldjs -l debug -p edgeextension package NetflixTweaked/edgeextension/manifest/"
