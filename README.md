@@ -1,3 +1,11 @@
+# This repository has been archived
+
+Thank you for everyone who used this extension, starred the repository, or contributed with issues. Going forward, this repository will be in a readonly (archived) state, so feel free to fork it if you wish to continue work on it, and note that I do not intend to remove the extensions from the extension stores, so if they still work well for you, then great!
+
+This was a fun project to build, but I simply won't have time to address any feature requests or bug fixes going forward, so, I've decided to simply archive the code to reflect that reality.
+
+Thanks again - cheers!
+
 # Netflix Tweaked <img src="https://github.com/andrewbrey/netflix-tweaked/blob/master/app/images/icon-150.png" width="75" align="left" />
 
 [![GitHub release](https://img.shields.io/github/package-json/v/andrewbrey/netflix-tweaked.svg?label=Package%20Version)](https://github.com/andrewbrey/netflix-tweaked/releases)
